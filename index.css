@@ -1,0 +1,145 @@
+/* Prerequisite  */
+
+:root{
+    --bg:#597688;
+    --white:white;
+    --black:rgb(78, 74, 74);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* music player section starts here 
+===================================== */
+#Player{
+    border: 1px solid var(--black);
+    height:30vmax;
+    width: 25vmax;
+    display: grid;
+    grid-template-rows: 1.5fr 7.5fr 3fr;
+    
+}
+
+/* Player header start */
+#PlayerHeader{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--bg);  
+    color: var(--white);
+    border-bottom: 1px solid var(--white);
+}
+#PlayerHeader button{
+    font-size:1.5vw;
+    border: none;
+    padding: .5rem;
+    background-color: transparent;
+    color: var(--white);
+}
+
+#txtSearch{
+    display: none;
+}
+
+/* Player header end */
+
+/* Player Body  start*/
+
+#PlayerBody{
+    background-color: var(--bg);
+    display: grid;
+    grid-template-columns: 0fr 12fr ;
+    transition: all 0.3s linear;
+    color: white;
+}
+
+#Sidebar{
+    background-color: var(--black);
+    display: flex;
+    flex-direction: column;
+    row-gap:1rem; 
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#Sideicons{
+    display: none;
+}
+#TrackPlayer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ------------------------------ */
+#TrackThumbnails{
+    display: inline-block;
+    border: 1px solid var(--black);
+    border-radius:5rem;
+    overflow: hidden;
+}
+
+/* applying TrackRotate animation to the =>TrackThumbnails  */
+.rotateAnimation{
+    animation:TrackRotate 15s infinite linear;   
+}
+
+/* it will stop the animation where user clicks pause button and continue after click play btn  */
+.animationPaused{
+    animation-play-state: paused;
+}
+
+/* animation for rotation for ther tumbnail  */
+@keyframes TrackRotate{
+    from{
+        transform: rotate(1deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+
+/* ------------------------------------- */
+
+/* Player Body  end*/
+
+/* Player FOoter  start*/
+#PlayerFotter{
+    display: grid;
+    grid-template-rows: 4fr 8fr;
+    background-color: var(--black);
+}
+#Shuffle{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+#Shuffle button{
+    font-size:1.5vw;
+    border: none;
+    padding:0rem;
+    background-color: transparent;
+}
+#FunButtons{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Player Footer  end*/
+
+
+/* music playeer ends here 
+============================================== */

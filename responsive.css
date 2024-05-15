@@ -1,0 +1,11 @@
+@media (max-width:600px) {
+    #Player{
+        height:100%;
+        width: 100%;
+        display: grid;
+        grid-template-rows: 1.5fr 7.5fr 3fr;
+    }
+    #PlayerHeader button ,#Shuffle button ,#FunButtons{
+        font-size:6vw;
+    }
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var arr=[
+        "gulabi","hsius","Gulabi_Sari.mp3"
+    ];
+    
+  function Player(arr){
+    var player = document.getElementById("player");
+    var div =document.createElement("div");
+    div.innerHTML=`
+    <h1> Total Tracks :${arr[arr.length-1]}</h1>
+    <p>${arr[0]}</p>
+    <audio controls  src=${arr[arr.length-1]}></audio>
+
+    `
+    player.appendChild(div);
+  }
+  function addToList(){
+  var track=document.getElementById("inputFile").value;
+  track=track.slice(12);
+  arr.push(track);
+// Player(arr);
+var player = document.getElementById("player");
+var div =document.createElement("div");
+div.innerHTML=`
+<h1> Total Tracks :${arr[arr.length-1]}</h1>
+<p>${arr[0]}</p>
+<audio controls  src=${arr[arr.length-1]}></audio>
+`
+player.appendChild(div);
+console.log(arr);
+  }
+    </script>
+
+
+
+
+</head>
+<body onload="Player()">
+    <div id="player">
+       
+    </div>
+    <div id="addMusic">
+        <h2>add music</h2>
+        <input type="file" id="inputFile"><button onclick="addToList()">add to musicList</button>
+
+    </div>
+    
+</body>
+</html>

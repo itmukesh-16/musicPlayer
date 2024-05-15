@@ -1,0 +1,17 @@
+[
+    {   "thumbnail":"../public/images/img2.jpg",
+        "title":"Gulabi",
+        "song":"Gulabi_Sari.mp3"
+    },
+    {
+        "thumbnail":"../public/images/img1.jpg",
+        "title":"Timro_Pratiksha",
+        "song":"Timro_Pratiksha.mp3"
+    }
+    ,
+    {
+        "thumbnail":"../public/images/img3.jpg",
+        "title":"Khudaya",
+        "song":"khudaya.mp3"
+    }
+]
