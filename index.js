@@ -21,9 +21,9 @@
 // document.addEventListener("DOMContentLoaded", loadPlayer());
 
 var Tracks = [
-  ["../public/images/img1.jpg", "Timro Pratiksha", "Timro_Pratiksha.mp3"],
-  ["../public/images/img2.jpg", "Gulabi Sari", "Gulabi_Sari.mp3"],
-  ["../public/images/img3.jpg", "Khudaya", "Khudaya.mp3"],
+  ["/public/images/img1.jpg", "Timro Pratiksha", "Timro_Pratiksha.mp3"],
+  ["/public/images/img2.jpg", "Gulabi Sari", "Gulabi_Sari.mp3"],
+  ["/public/images/img3.jpg", "Khudaya", "Khudaya.mp3"],
 ];
 var trackIndex = 0;
 // MusicPlayer Header starts
