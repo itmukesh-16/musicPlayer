@@ -17,7 +17,6 @@
 // next():- move to the next TrackEvent.
 // Previous():-move to the previous track .
 
-
 // document.addEventListener("DOMContentLoaded", loadPlayer());
 
 var Tracks = [
@@ -31,7 +30,6 @@ var trackIndex = 0;
 
 // justify toggle buttton functionality
 function btnToggle() {
-
   var btnSidebarToggle = document.getElementById("btnSidebarToggle");
   if (btnSidebarToggle.classList.contains("bi-justify")) {
     btnSidebarToggle.classList.remove("bi-justify");
@@ -42,9 +40,7 @@ function btnToggle() {
 
     var Sideicons = document.getElementById("Sideicons");
     Sideicons.style = "display:block";
-
   } else {
-
     btnSidebarToggle.classList.remove("bi-x-lg");
     btnSidebarToggle.classList.add("bi-justify");
 
@@ -54,13 +50,11 @@ function btnToggle() {
     var Sideicons = document.getElementById("Sideicons");
     Sideicons.style = "display:none";
   }
-
 }
 
 // search button toggle functionality and search functionality
 
 function btnSearch() {
-  
   var btnSearch = document.getElementById("btnSearch");
   var txtSearch = document.getElementById("txtSearch");
   var spanListPlaylist = document.getElementById("list");
@@ -76,8 +70,14 @@ function btnSearch() {
 
     // checking wheather the search string is empty or not
     if (txtSearch.value != "") {
-      // adding the extension to the searched song
-      txtSearch.value = txtSearch.value + ".mp3";
+      
+      // checking wheather the song contains ".mp3" extension or not 
+      if (txtSearch.value.endsWith(".mp3")) {
+      } else {
+
+        // adding the extension to the searched song
+        txtSearch.value = txtSearch.value + ".mp3";
+      }
 
       // if its not empty then search the song  in the array Tracks
       for (var i = 0; i < Tracks.length; i++) {
@@ -149,6 +149,7 @@ function playSearchResult(searchedSongSatusIndex) {
 
 // player
 function loadPlayer() {
+
   var TrackPlayer = document.getElementById("TrackPlayer");
   TrackPlayer.innerHTML = "";
   var div = document.createElement("div");
@@ -162,28 +163,34 @@ function loadPlayer() {
     `;
   TrackPlayer.appendChild(div);
   TrackPlayer.appendChild(span);
+
+// calling the loadAudioProgresssBar in every 300ms 
+setInterval(loadAudioProgresssBar,500);
+
 }
 
-function addSong(){
-
-  var Sidebar=document.getElementById("Sidebar");
-  Sidebar.innerHTML='';
-  Sidebar.innerHTML=` <input type="file" id="inputFile"/> `;
+function addSong() {
+  var Sidebar = document.getElementById("Sidebar");
+  Sidebar.innerHTML = "";
+  Sidebar.innerHTML = ` <input type="file" id="inputFile"/> `;
 }
-function updateTracks(){
-  var uploadedSong=document.getElementById("inputFile").value;
-  uploadedSong=uploadedSong.slice(12);
+function updateTracks() {
+  var uploadedSong = document.getElementById("inputFile").value;
+  uploadedSong = uploadedSong.slice(12);
   Tracks.push(uploadedSong);
   document.write(Tracks);
 }
 
+
 // MusicPlayer body end
 //======================================
 
-
 // MusicPlayer Fotter starts
 //======================================
+// implementing the mute and unmute functionality
+
 var btnid = "";
+
 function btnMuteUnmuteToggle() {
   btnid = document.getElementById("btnMuteToggle");
   var audio = document.getElementById("audio");
@@ -198,6 +205,22 @@ function btnMuteUnmuteToggle() {
   }
 }
 
+// implementing the song progressbar functionality
+function loadAudioProgresssBar(){
+  var audio = document.getElementById("audio");
+  var audioProgressBar=document.getElementById("progress");
+  audioProgressBar.max=audio.duration;
+  audioProgressBar.value=audio.currentTime;
+}
+
+function updateProgressBar(){
+  var audio = document.getElementById("audio");
+  var audioProgressBar=document.getElementById("progress");
+   audioProgressBar.max=audio.duration;
+  audio.currentTime=audioProgressBar.value;
+
+}
+    
 // play,pause, next, previous functionality
 //---------------------------------------
 

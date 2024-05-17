@@ -123,9 +123,16 @@ body{
 }
 #Shuffle{
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
 }
+
+#progress {
+    width: 80%;
+}
+
+
 #Shuffle button{
     font-size:1.5vw;
     border: none;
