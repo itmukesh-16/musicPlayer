@@ -25,6 +25,7 @@ var Tracks = [
   ["public/images/img3.jpg", "Khudaya", "Khudaya.mp3"],
 ];
 var trackIndex = 0;
+
 // MusicPlayer Header starts
 //======================================
 
@@ -70,11 +71,9 @@ function btnSearch() {
 
     // checking wheather the search string is empty or not
     if (txtSearch.value != "") {
-      
-      // checking wheather the song contains ".mp3" extension or not 
+      // checking wheather the song contains ".mp3" extension or not
       if (txtSearch.value.endsWith(".mp3")) {
       } else {
-
         // adding the extension to the searched song
         txtSearch.value = txtSearch.value + ".mp3";
       }
@@ -149,7 +148,6 @@ function playSearchResult(searchedSongSatusIndex) {
 
 // player
 function loadPlayer() {
-
   var TrackPlayer = document.getElementById("TrackPlayer");
   TrackPlayer.innerHTML = "";
   var div = document.createElement("div");
@@ -164,23 +162,60 @@ function loadPlayer() {
   TrackPlayer.appendChild(div);
   TrackPlayer.appendChild(span);
 
-// calling the loadAudioProgresssBar in every 300ms 
-setInterval(loadAudioProgresssBar,500);
-
+  // calling the loadAudioProgresssBar in every 300ms
+  setInterval(loadAudioProgresssBar, 500);
 }
 
 function addSong() {
   var Sidebar = document.getElementById("Sidebar");
   Sidebar.innerHTML = "";
-  Sidebar.innerHTML = ` <input type="file" id="inputFile"/> `;
-}
-function updateTracks() {
-  var uploadedSong = document.getElementById("inputFile").value;
-  uploadedSong = uploadedSong.slice(12);
-  Tracks.push(uploadedSong);
-  document.write(Tracks);
+  Sidebar.innerHTML = ` <input type="file" id="inputFile" accept="audio/*"/> `;
+  setTimeout(updateTracks, 10000);
 }
 
+function updateTracks() {
+
+  // var uploadedSong = document.getElementById("inputFile").value;
+  // var uploadedSongThumbImage=uploadedSong.slice(12);
+  // uploadedSongThumbImage=uploadedSongThumbImage.substr(0,(uploadedSongThumbImage.length - 4))+"img";
+  // var uploadedSongTitle=uploadedSong.slice(12);
+  // var uploadedSongPath=uploadedSong;
+
+  // Tracks.push([`${uploadedSongThumbImage}`,`${uploadedSongTitle}`,`${uploadedSongPath}`]);
+
+  // console.log(Tracks);
+
+  // trackIndex=Tracks.length-1;
+  // loadPlayer();
+
+
+  // for selecting the first inputed file we used .files[0];
+  var uploadedFile = document.getElementById("inputFile").files[0];
+
+  if (uploadedFile) {
+    // using an UML object to create a virtual path suitable for every path 
+    var uploadedSongPath = URL.createObjectURL(uploadedFile);
+
+    // .name allowa us to select file name without performing any strin slice methods
+    var uploadedSongTitle = uploadedFile.name;
+
+    // storing song image 
+    var uploadedSongThumbImage =
+      uploadedSongTitle.substr(0, uploadedSongTitle.lastIndexOf(".")) + "img";
+
+      // pushing unto the Tracks array 
+    Tracks.push([uploadedSongThumbImage, uploadedSongTitle, uploadedSongPath]);
+
+    console.log(Tracks);
+    // updating the track index to the updated song 
+    trackIndex = Tracks.length - 1;
+    // calling the loadPlayer to play the song 
+    loadPlayer();
+  } else {
+    console.error("No file selected.");
+  }
+  
+}
 
 // MusicPlayer body end
 //======================================
@@ -206,25 +241,25 @@ function btnMuteUnmuteToggle() {
 }
 
 // implementing the song progressbar functionality
-function loadAudioProgresssBar(){
+function loadAudioProgresssBar() {
   var audio = document.getElementById("audio");
-  var audioProgressBar=document.getElementById("progress");
-  audioProgressBar.max=audio.duration;
-  audioProgressBar.value=audio.currentTime;
+  var audioProgressBar = document.getElementById("progress");
+  audioProgressBar.max = audio.duration;
+  audioProgressBar.value = audio.currentTime;
 }
 
-function updateProgressBar(){
+function updateProgressBar() {
   var audio = document.getElementById("audio");
-  var audioProgressBar=document.getElementById("progress");
-   audioProgressBar.max=audio.duration;
-  audio.currentTime=audioProgressBar.value;
-
+  var audioProgressBar = document.getElementById("progress");
+  audioProgressBar.max = audio.duration;
+  audio.currentTime = audioProgressBar.value;
 }
-    
+
 // play,pause, next, previous functionality
 //---------------------------------------
 
 var btnPlayPause = "";
+
 function Play_Pause() {
   // it get the audio element id that which was created dynamically
   var audio = document.getElementById("audio");
