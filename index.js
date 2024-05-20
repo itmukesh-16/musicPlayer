@@ -31,7 +31,9 @@ var trackIndex = 0;
 function initiate(){
   btnPlayPause = document.getElementById("btnPlayPause");
   muteBtn = document.getElementById("btnMuteToggle");
+  
 }
+
 // MusicPlayer Header starts
 //======================================
 
@@ -162,17 +164,26 @@ function loadPlayer() {
   span.innerHTML = `${Tracks[trackIndex][1]}`;
   div.innerHTML = `
     <div id="TrackThumbnails" class="rotateAnimation" onclick="Play_Pause()">
-        <img src=${Tracks[trackIndex][0]} height="100" width="100"  >
-        <audio autoplay src=${Tracks[trackIndex][2]} id="audio"></audio>
+        <img src=${Tracks[trackIndex][0]} height="100" width="100">
+        <audio id="audio">
+          <source src=${Tracks[trackIndex][2]} type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
     </div>
-    `;
+  `;
   TrackPlayer.appendChild(div);
   TrackPlayer.appendChild(span);
 
-  // calling the initiate function to initiate muteBtn and btnPlay_Pause
-   initiate();
+  // Initiate buttons and other elements
+  initiate();
 
-  // calling the loadAudioProgresssBar in every 300ms
+  // Start playing the audio once it is loaded
+  var audio = document.getElementById("audio");
+  audio.play().catch(function(error) {
+    console.log("Autoplay was prevented. User interaction is required to start the audio.", error);
+  });
+
+  // Update the audio progress bar periodically
   setInterval(loadAudioProgresssBar, 500);
 }
 
@@ -197,8 +208,7 @@ function updateTracks() {
     var uploadedSongTitle = uploadedFile.name;
 
     // storing song image
-    var uploadedSongThumbImage =
-      uploadedSongTitle.substr(0, uploadedSongTitle.lastIndexOf(".")) + "img";
+    var uploadedSongThumbImage ='public/images/logo.jpg';
 
     // pushing unto the Tracks array
     Tracks.push([uploadedSongThumbImage, uploadedSongTitle, uploadedSongPath]);
