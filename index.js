@@ -26,12 +26,19 @@ var Tracks = [
 ];
 var trackIndex = 0;
 
+// initaiting muteBtn And btnPlayPaue so that when initially user changes next() or Previous()
+//its value it will check wheather the class contains the desired value or not 
+function initiate(){
+  btnPlayPause = document.getElementById("btnPlayPause");
+  muteBtn = document.getElementById("btnMuteToggle");
+}
 // MusicPlayer Header starts
 //======================================
 
 // justify toggle buttton functionality
 function btnToggle() {
   var btnSidebarToggle = document.getElementById("btnSidebarToggle");
+
   if (btnSidebarToggle.classList.contains("bi-justify")) {
     btnSidebarToggle.classList.remove("bi-justify");
     btnSidebarToggle.classList.add("bi-x-lg");
@@ -162,6 +169,9 @@ function loadPlayer() {
   TrackPlayer.appendChild(div);
   TrackPlayer.appendChild(span);
 
+  // calling the initiate function to initiate muteBtn and btnPlay_Pause
+   initiate();
+
   // calling the loadAudioProgresssBar in every 300ms
   setInterval(loadAudioProgresssBar, 500);
 }
@@ -169,52 +179,39 @@ function loadPlayer() {
 function addSong() {
   var Sidebar = document.getElementById("Sidebar");
   Sidebar.innerHTML = "";
-  Sidebar.innerHTML = ` <input type="file" id="inputFile" accept="audio/*"/> `;
+
+  Sidebar.innerHTML = `<input type="file" id="inputFile" accept="audio/*"/> `;
+
   setTimeout(updateTracks, 10000);
 }
 
 function updateTracks() {
-
-  // var uploadedSong = document.getElementById("inputFile").value;
-  // var uploadedSongThumbImage=uploadedSong.slice(12);
-  // uploadedSongThumbImage=uploadedSongThumbImage.substr(0,(uploadedSongThumbImage.length - 4))+"img";
-  // var uploadedSongTitle=uploadedSong.slice(12);
-  // var uploadedSongPath=uploadedSong;
-
-  // Tracks.push([`${uploadedSongThumbImage}`,`${uploadedSongTitle}`,`${uploadedSongPath}`]);
-
-  // console.log(Tracks);
-
-  // trackIndex=Tracks.length-1;
-  // loadPlayer();
-
-
   // for selecting the first inputed file we used .files[0];
   var uploadedFile = document.getElementById("inputFile").files[0];
 
   if (uploadedFile) {
-    // using an UML object to create a virtual path suitable for every path 
+    // using an UML object to create a virtual path suitable for every path
     var uploadedSongPath = URL.createObjectURL(uploadedFile);
 
     // .name allowa us to select file name without performing any strin slice methods
     var uploadedSongTitle = uploadedFile.name;
 
-    // storing song image 
+    // storing song image
     var uploadedSongThumbImage =
       uploadedSongTitle.substr(0, uploadedSongTitle.lastIndexOf(".")) + "img";
 
-      // pushing unto the Tracks array 
+    // pushing unto the Tracks array
     Tracks.push([uploadedSongThumbImage, uploadedSongTitle, uploadedSongPath]);
 
     console.log(Tracks);
-    // updating the track index to the updated song 
+    // updating the track index to the updated song
     trackIndex = Tracks.length - 1;
-    // calling the loadPlayer to play the song 
+    // calling the loadPlayer to play the song
     loadPlayer();
+    // to hide the inputFile
   } else {
     console.error("No file selected.");
   }
-  
 }
 
 // MusicPlayer body end
@@ -224,19 +221,20 @@ function updateTracks() {
 //======================================
 // implementing the mute and unmute functionality
 
-var btnid = "";
+var muteBtn = "";
 
 function btnMuteUnmuteToggle() {
-  btnid = document.getElementById("btnMuteToggle");
+  muteBtn = document.getElementById("btnMuteToggle");
   var audio = document.getElementById("audio");
-  if (btnid.classList.contains("bi-volume-up")) {
+
+  if (muteBtn.classList.contains("bi-volume-up")) {
+    muteBtn.classList.remove("bi-volume-up");
+    muteBtn.classList.add("bi-volume-mute");
     audio.muted = true;
-    btnid.classList.remove("bi-volume-up");
-    btnid.classList.add("bi-volume-mute");
   } else {
+    muteBtn.classList.remove("bi-volume-mute");
+    muteBtn.classList.add("bi-volume-up");
     audio.muted = false;
-    btnid.classList.remove("bi-volume-mute");
-    btnid.classList.add("bi-volume-up");
   }
 }
 
@@ -259,7 +257,7 @@ function updateProgressBar() {
 //---------------------------------------
 
 var btnPlayPause = "";
-
+ 
 function Play_Pause() {
   // it get the audio element id that which was created dynamically
   var audio = document.getElementById("audio");
@@ -279,8 +277,6 @@ function Play_Pause() {
 
     // adding the =>.animationPaused Class to stop runnig =>.rotateAnimation
     audioThumbAnimation.classList.add("animationPaused");
-
-    // console.log("pause");
   } else {
     // to play the audio
     audio.play();
@@ -289,20 +285,35 @@ function Play_Pause() {
 
     // removing the =>.animationPaused Class to run =>.rotateAnimation
     audioThumbAnimation.classList.remove("animationPaused");
-    // console.log("play");
   }
 }
 
 // configuring the next button
 function Next() {
+  muteUnmute_PlayPauseToggleBtn();
+
   // changing the array Tracks index to next index i.e next song.
   // if Tracks finished then return to index 0.
   trackIndex = (trackIndex + 1) % Tracks.length;
+  //    after change the music index load the music into player
+  loadPlayer();
+}
 
+// configuring the previous button
+function Previous() {
+  muteUnmute_PlayPauseToggleBtn();
+  trackIndex = (trackIndex - 1 + Tracks.length) % Tracks.length;
+  loadPlayer();
+}
+// MusicPlayer Footer end
+//======================================
+
+function muteUnmute_PlayPauseToggleBtn() {
+  
   //   changing the mute symbol to unmute as it changes to new song
-  if (btnid.classList.contains("bi-volume-mute")) {
-    btnid.classList.remove("bi-volume-mute");
-    btnid.classList.add("bi-volume-up");
+  if (muteBtn.classList.contains("bi-volume-mute")) {
+    muteBtn.classList.remove("bi-volume-mute");
+    muteBtn.classList.add("bi-volume-up");
   }
 
   //   changing the pause button to play button .
@@ -312,25 +323,4 @@ function Next() {
     btnPlayPause.classList.remove("bi-play");
     btnPlayPause.classList.add("bi-pause");
   }
-  //    after change the music index load the music into player
-  loadPlayer();
 }
-
-// configuring the previous button
-function Previous() {
-  trackIndex = (trackIndex - 1 + Tracks.length) % Tracks.length;
-
-  if (btnid.classList.contains("bi-volume-mute")) {
-    btnid.classList.remove("bi-volume-mute");
-    btnid.classList.add("bi-volume-up");
-  }
-
-  if (btnPlayPause.classList.contains("bi-play")) {
-    // to pause the audio
-    btnPlayPause.classList.remove("bi-play");
-    btnPlayPause.classList.add("bi-pause");
-  }
-  loadPlayer();
-}
-// MusicPlayer Footer end
-//======================================
